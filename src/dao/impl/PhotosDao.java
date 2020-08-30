@@ -1,6 +1,7 @@
 package dao.impl;
 
 import dao.iPhotosDao;
+import dao.impl.enums.PhotoColumns;
 import jdbc.SingleConnectionManager;
 import om.Photo;
 
@@ -26,11 +27,11 @@ public class PhotosDao implements iPhotosDao {
 
         while (rs.next()){
             Photo photo = new Photo();
-            photo.setId(rs.getInt("id"));
-            photo.setLink(rs.getString("link"));
-            photo.setCoutViews(rs.getInt("countViews"));
-            photo.setDate(rs.getDate("dateLabel"));
-            photo.setLocation(rs.getString("location"));
+            photo.setId(rs.getInt(PhotoColumns.ID.getName()));
+            photo.setLink(rs.getString(PhotoColumns.LINK.getName()));
+            photo.setCoutViews(rs.getInt(PhotoColumns.VIEWS.getName()));
+            photo.setDate(rs.getDate(PhotoColumns.DATE.getName()));
+            photo.setLocation(rs.getString(PhotoColumns.LOCATION.getName()));
             photosList.add(photo);
         }
         return photosList;

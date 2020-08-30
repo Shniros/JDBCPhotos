@@ -1,24 +1,50 @@
 package gui;
 
+import dao.impl.PhotosDao;
+import gui.model.PhotoTableModel;
+
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 
 public class PhotoBoard extends JFrame {
     private JPanel mainPanel;
     private JTable photosTable = new JTable();
-
+    PhotoTableModel photoTableModel;
     public PhotoBoard() {
         $$$setupUI$$$();
         getContentPane().add(mainPanel);
-        setLocationRelativeTo(null);
+      //  setLocationRelativeTo(null);
+        configureFrame();
         pack();
     }
 
-    public void display() {
-        //loadData();
-        setVisible(true);
+    private void configureFrame() {
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        initTable();
+        $$$setupUI$$$();
+        getContentPane().add($$$getRootComponent$$$());
+        pack();
+        setLocationRelativeTo(null);
     }
 
+    private void initTable() {
+        photoTableModel = new PhotoTableModel();
+        photosTable.setModel(photoTableModel);
+    }
+
+    public void loadData() throws SQLException {
+        photoTableModel.refresh();
+    }
+
+    public void setPhotosDao(PhotosDao photosDao) {
+        photoTableModel.setClientDao(photosDao);
+    }
+
+    public void display() throws SQLException {
+        loadData();
+        setVisible(true);
+    }
     private void createUIComponents() {
         // TODO: place custom component creation code here
     }
